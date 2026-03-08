@@ -46,8 +46,8 @@ password: "123456"
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |body|body|object| 是 |none|
-|» username|body|string| 否 |none|
-|» password|body|string| 否 |none|
+|» username|body|string| 是 |none|
+|» password|body|string| 是 |none|
 
 > 返回示例
 
@@ -122,8 +122,8 @@ password: "123456"
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |body|body|object| 是 |none|
-|» username|body|string| 否 |none|
-|» password|body|string| 否 |none|
+|» username|body|string| 是 |none|
+|» password|body|string| 是 |none|
 
 > 返回示例
 
@@ -193,9 +193,9 @@ GET /user/info
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|user_id|query|string| 否 |none|
-|Access-Token|header|string| 否 |none|
-|Refresh-Token|header|string| 否 |none|
+|user_id|query|string| 是 |none|
+|Access-Token|header|string| 是 |none|
+|Refresh-Token|header|string| 是 |none|
 
 > 返回示例
 
@@ -278,10 +278,10 @@ data: /home/koukoe/Pictures/ArchTan.png
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Access-Token|header|string| 否 |none|
-|Refresh-Token|header|string| 否 |none|
+|Access-Token|header|string| 是 |none|
+|Refresh-Token|header|string| 是 |none|
 |body|body|object| 是 |none|
-|» data|body|string(binary)| 否 |none|
+|» data|body|string(binary)| 是 |none|
 
 > 返回示例
 
