@@ -12,12 +12,18 @@ import (
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
+
 	user := r.Group("/user")
 	{
 		user.POST("/register", handler.Register)
 		user.POST("/login", handler.Login)
 		user.GET("/info", middleware.DualTokenAuth(), handler.GetUserInfo)
 		user.PUT("/avatar/upload", middleware.DualTokenAuth(), handler.UploadAvatar)
+	}
+
+	video := r.Group("/video")
+	{
+		video.POST("/publish", middleware.DualTokenAuth(), handler.PublishVideo)
 	}
 
 	// your code ...

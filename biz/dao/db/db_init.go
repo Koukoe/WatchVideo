@@ -17,6 +17,9 @@ func Init() error {
 	if err := d.AutoMigrate(&store.User{}); err != nil {
 		return err
 	}
+	if err := d.AutoMigrate(&store.Video{}); err != nil {
+		return err
+	}
 	DB = d
 	return nil
 }

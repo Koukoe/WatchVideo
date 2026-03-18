@@ -36,3 +36,5 @@ _testmain.go
 dumped_hertz_remote_config.json
 /storage/avatars/*
 !/storage/avatars/.gitkeep
+/storage/videos/*
+!/storage/videos/.gitkeep
