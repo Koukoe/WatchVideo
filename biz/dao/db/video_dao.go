@@ -31,3 +31,57 @@ func CountVideosByUserID(userID string) (int64, error) {
 	}
 	return count, nil
 }
+
+func SearchVideos(keywords, username, fromDate, toDate string, offset, limit int) ([]*store.Video, error) {
+	query := DB.Model(&store.Video{})
+
+	if keywords != "" {
+		likePattern := "%" + keywords + "%"
+		query = query.Where("title LIKE ? OR description LIKE ?", likePattern, likePattern)
+	}
+
+	if username != "" {
+		likePattern := "%" + username + "%"
+		query = query.Where("author_id IN (SELECT id FROM users WHERE username = ?)", likePattern)
+	}
+
+	if fromDate != "" {
+		query = query.Where("created_at >= ?", fromDate)
+	}
+	if toDate != "" {
+		query = query.Where("created_at <= ?", toDate)
+	}
+
+	var videos []*store.Video
+	if err := query.Offset(offset).Limit(limit).Find(&videos).Error; err != nil {
+		return nil, err
+	}
+	return videos, nil
+}
+
+func CountSearchVideos(keywords, username, fromDate, toDate string) (int64, error) {
+	query := DB.Model(&store.Video{})
+
+	if keywords != "" {
+		likePattern := "%" + keywords + "%"
+		query = query.Where("title LIKE ? OR description LIKE ?", likePattern, likePattern)
+	}
+
+	if username != "" {
+		likePattern := "%" + username + "%"
+		query = query.Where("author_id IN (SELECT id FROM users WHERE username = ?)", likePattern)
+	}
+
+	if fromDate != "" {
+		query = query.Where("created_at >= ?", fromDate)
+	}
+	if toDate != "" {
+		query = query.Where("created_at <= ?", toDate)
+	}
+
+	var count int64
+	if err := query.Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return count, nil
+}

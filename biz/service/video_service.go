@@ -102,3 +102,49 @@ func ListVideosByUser(req *api.VideoListRequest) (*api.VideoListResponse, int64,
 
 	return &api.VideoListResponse{Videos: resp}, total, nil
 }
+
+func SearchVideos(req *api.SearchVideosRequest) (*api.SearchVideosResponse, int64, error) {
+	if req == nil {
+		return nil, 0, ErrInvalidParams
+	}
+
+	pageNum := req.PageNum
+	pageSize := req.PageSize
+	if pageNum <= 0 {
+		pageNum = 1
+	}
+	if pageSize <= 0 {
+		pageSize = 10
+	}
+
+	offset := (pageNum - 1) * pageSize
+
+	total, err := db.CountSearchVideos(req.Keywords, req.Username, req.FromDate, req.ToDate)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	videos, err := db.SearchVideos(req.Keywords, req.Username, req.FromDate, req.ToDate, offset, pageSize)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	resp := make([]*api.VideoResponse, 0, len(videos))
+	for _, v := range videos {
+		resp = append(resp, &api.VideoResponse{
+			ID:           v.ID,
+			UserID:       v.AuthorID,
+			Title:        v.Title,
+			Description:  v.Description,
+			PlayURL:      v.PlayURL,
+			CoverURL:     v.CoverURL,
+			LikeCount:    v.LikeCount,
+			CommentCount: v.CommentCount,
+			VisitCount:   v.VisitCount,
+			CreatedAt:    v.CreatedAt.Format("2006-01-02 15:04:05"),
+			UpdatedAt:    v.UpdatedAt.Format("2006-01-02 15:04:05"),
+		})
+	}
+
+	return &api.SearchVideosResponse{Videos: resp}, total, nil
+}

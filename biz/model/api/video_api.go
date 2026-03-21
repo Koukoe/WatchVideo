@@ -31,3 +31,16 @@ type VideoListRequest struct {
 type VideoListResponse struct {
 	Videos []*VideoResponse `json:"videos"`
 }
+
+type SearchVideosRequest struct {
+	Keywords string `form:"keywords" json:"keywords"`
+	PageNum  int    `form:"page_num" json:"page_num"`
+	PageSize int    `form:"page_size" json:"page_size"`
+	FromDate string `form:"from_date" json:"from_date"`
+	ToDate   string `form:"to_date" json:"to_date"`
+	Username string `form:"username" json:"username"`
+}
+
+type SearchVideosResponse struct {
+	Videos []*VideoResponse `json:"videos"`
+}
