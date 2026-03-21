@@ -349,5 +349,279 @@ data: /home/koukoe/Pictures/ArchTan.png
 |»» msg|string|true|none||none|
 |» data|null|true|none||none|
 
+# 视频
+
+## POST 投稿
+
+POST /video/publish
+
+> Body 请求参数
+
+```yaml
+data: file:///home/koukoe/Downloads/Video_1763742978897.mp4
+title: vid1
+description: vid1
+
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|Access-Token|header|string| 是 |none|
+|Refresh-Token|header|string| 是 |none|
+|body|body|object| 是 |none|
+|» data|body|string(binary)| 否 |none|
+|» title|body|string| 否 |none|
+|» description|body|string| 否 |none|
+
+> 返回示例
+
+> 200 Response
+
+```json
+{
+  "base": {
+    "code": 10000,
+    "msg": "success"
+  },
+  "data": {
+    "id": "10002",
+    "author_id": "10002",
+    "title": "vid1",
+    "description": "vid1",
+    "play_url": "/storage/videos/1773850157530888114.mp4",
+    "cover_url": "",
+    "like_count": 0,
+    "comment_count": 0,
+    "visit_count": 0,
+    "created_at": "2026-03-19T00:09:17+08:00",
+    "updated_at": "2026-03-19T00:09:17+08:00"
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» base|object|true|none||none|
+|»» code|integer|true|none||none|
+|»» msg|string|true|none||none|
+|» data|object|true|none||none|
+|»» id|string|true|none||none|
+|»» author_id|string|true|none||none|
+|»» title|string|true|none||none|
+|»» description|string|true|none||none|
+|»» play_url|string|true|none||none|
+|»» cover_url|string|true|none||none|
+|»» like_count|integer|true|none||none|
+|»» comment_count|integer|true|none||none|
+|»» visit_count|integer|true|none||none|
+|»» created_at|string|true|none||none|
+|»» updated_at|string|true|none||none|
+
+## GET 发布列表
+
+GET /video/list
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|user_id|query|string| 是 |none|
+|page_num|query|string| 否 |none|
+|page_size|query|string| 否 |none|
+
+> 返回示例
+
+> 200 Response
+
+```json
+{
+  "base": {
+    "code": 10000,
+    "msg": "success"
+  },
+  "data": {
+    "items": {
+      "videos": [
+        {
+          "id": "10001",
+          "user_id": "10002",
+          "title": "vid1",
+          "description": "vid1",
+          "play_url": "/storage/videos/1773850069460546476.mp4",
+          "cover_url": "",
+          "like_count": 0,
+          "comment_count": 0,
+          "visit_count": 0,
+          "created_at": "2026-03-19 00:07:49",
+          "updated_at": "2026-03-19 00:07:49"
+        },
+        {
+          "id": "10002",
+          "user_id": "10002",
+          "title": "vid1",
+          "description": "vid1",
+          "play_url": "/storage/videos/1773850157530888114.mp4",
+          "cover_url": "",
+          "like_count": 0,
+          "comment_count": 0,
+          "visit_count": 0,
+          "created_at": "2026-03-19 00:09:17",
+          "updated_at": "2026-03-19 00:09:17"
+        }
+      ]
+    },
+    "total": 2
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» base|object|true|none||none|
+|»» code|integer|true|none||none|
+|»» msg|string|true|none||none|
+|» data|object|true|none||none|
+|»» items|object|true|none||none|
+|»»» videos|[object]|true|none||none|
+|»»»» id|string|true|none||none|
+|»»»» user_id|string|true|none||none|
+|»»»» title|string|true|none||none|
+|»»»» description|string|true|none||none|
+|»»»» play_url|string|true|none||none|
+|»»»» cover_url|string|true|none||none|
+|»»»» like_count|integer|true|none||none|
+|»»»» comment_count|integer|true|none||none|
+|»»»» visit_count|integer|true|none||none|
+|»»»» created_at|string|true|none||none|
+|»»»» updated_at|string|true|none||none|
+|»» total|integer|true|none||none|
+
+## POST 搜索视频
+
+POST /video/search
+
+> Body 请求参数
+
+```yaml
+keywords: ""
+page_num: ""
+page_size: ""
+from_date: ""
+to_date: ""
+username: ""
+
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|object| 是 |none|
+|» keywords|body|string| 是 |none|
+|» page_num|body|string| 否 |none|
+|» page_size|body|string| 否 |none|
+|» from_date|body|string| 否 |none|
+|» to_date|body|string| 否 |none|
+|» username|body|string| 否 |none|
+
+> 返回示例
+
+> 200 Response
+
+```json
+{
+  "base": {
+    "code": 10000,
+    "msg": "success"
+  },
+  "data": {
+    "items": {
+      "videos": [
+        {
+          "id": "10001",
+          "user_id": "10002",
+          "title": "vid1",
+          "description": "vid1",
+          "play_url": "/storage/videos/1773850069460546476.mp4",
+          "cover_url": "",
+          "like_count": 0,
+          "comment_count": 0,
+          "visit_count": 0,
+          "created_at": "2026-03-19 00:07:49",
+          "updated_at": "2026-03-19 00:07:49"
+        },
+        {
+          "id": "10002",
+          "user_id": "10002",
+          "title": "vid1",
+          "description": "vid1",
+          "play_url": "/storage/videos/1773850157530888114.mp4",
+          "cover_url": "",
+          "like_count": 0,
+          "comment_count": 0,
+          "visit_count": 0,
+          "created_at": "2026-03-19 00:09:17",
+          "updated_at": "2026-03-19 00:09:17"
+        }
+      ]
+    },
+    "total": 2
+  }
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|none|Inline|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» base|object|true|none||none|
+|»» code|integer|true|none||none|
+|»» msg|string|true|none||none|
+|» data|object|true|none||none|
+|»» items|object|true|none||none|
+|»»» videos|[object]|true|none||none|
+|»»»» id|string|true|none||none|
+|»»»» user_id|string|true|none||none|
+|»»»» title|string|true|none||none|
+|»»»» description|string|true|none||none|
+|»»»» play_url|string|true|none||none|
+|»»»» cover_url|string|true|none||none|
+|»»»» like_count|integer|true|none||none|
+|»»»» comment_count|integer|true|none||none|
+|»»»» visit_count|integer|true|none||none|
+|»»»» created_at|string|true|none||none|
+|»»»» updated_at|string|true|none||none|
+|»» total|integer|true|none||none|
+
 # 数据模型
 
