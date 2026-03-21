@@ -85,7 +85,7 @@ func VideoList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	items, total, err := service.ListVideosByAuthor(&req)
+	items, total, err := service.ListVideosByUser(&req)
 	if err != nil {
 		if errors.Is(err, service.ErrInvalidParams) {
 			response.Error(c, http.StatusBadRequest, response.CodeBadRequest, "invalid params")

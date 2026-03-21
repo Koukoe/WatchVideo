@@ -44,7 +44,7 @@ func PublishVideo(currentUserID string, req *api.PublishVideoRequest, savedPlayU
 
 	return &api.VideoResponse{
 		ID:           v.ID,
-		AuthorID:     v.AuthorID,
+		UserID:       v.AuthorID,
 		Title:        v.Title,
 		Description:  v.Description,
 		PlayURL:      v.PlayURL,
@@ -57,8 +57,8 @@ func PublishVideo(currentUserID string, req *api.PublishVideoRequest, savedPlayU
 	}, nil
 }
 
-func ListVideosByAuthor(req *api.VideoListRequest) (*api.VideoListResponse, int64, error) {
-	if req == nil || strings.TrimSpace(req.AuthorID) == "" {
+func ListVideosByUser(req *api.VideoListRequest) (*api.VideoListResponse, int64, error) {
+	if req == nil || strings.TrimSpace(req.UserID) == "" {
 		return nil, 0, ErrInvalidParams
 	}
 
@@ -73,12 +73,12 @@ func ListVideosByAuthor(req *api.VideoListRequest) (*api.VideoListResponse, int6
 
 	offset := (pageNum - 1) * pageSize
 
-	total, err := db.CountVideosByAuthorID(req.AuthorID)
+	total, err := db.CountVideosByUserID(req.UserID)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	videos, err := db.ListVideosByAuthorID(req.AuthorID, offset, pageSize)
+	videos, err := db.ListVideosByUserID(req.UserID, offset, pageSize)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -87,7 +87,7 @@ func ListVideosByAuthor(req *api.VideoListRequest) (*api.VideoListResponse, int6
 	for _, v := range videos {
 		resp = append(resp, &api.VideoResponse{
 			ID:           v.ID,
-			AuthorID:     v.AuthorID,
+			UserID:       v.AuthorID,
 			Title:        v.Title,
 			Description:  v.Description,
 			PlayURL:      v.PlayURL,

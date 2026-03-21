@@ -1,7 +1,7 @@
 package api
 
 type PublishVideoRequest struct {
-	AuthorID    string `form:"author_id" json:"author_id"`
+	UserID      string `form:"user_id" json:"user_id"`
 	Title       string `form:"title" json:"title"`
 	Description string `form:"description" json:"description"`
 	PlayURL     string `form:"play_url" json:"play_url"`
@@ -10,7 +10,7 @@ type PublishVideoRequest struct {
 
 type VideoResponse struct {
 	ID           string `json:"id"`
-	AuthorID     string `json:"author_id"`
+	UserID       string `json:"user_id"`
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	PlayURL      string `json:"play_url"`
@@ -23,7 +23,7 @@ type VideoResponse struct {
 }
 
 type VideoListRequest struct {
-	AuthorID string `query:"author_id"`
+	UserID   string `query:"user_id"`
 	PageNum  int    `query:"page_num"`
 	PageSize int    `query:"page_size"`
 }
