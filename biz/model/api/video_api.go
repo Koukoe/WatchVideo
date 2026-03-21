@@ -8,7 +8,7 @@ type PublishVideoRequest struct {
 	CoverURL    string `form:"cover_url" json:"cover_url"`
 }
 
-type PublishVideoResponse struct {
+type VideoResponse struct {
 	ID           string `json:"id"`
 	AuthorID     string `json:"author_id"`
 	Title        string `json:"title"`
@@ -20,4 +20,14 @@ type PublishVideoResponse struct {
 	VisitCount   int64  `json:"visit_count"`
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`
+}
+
+type VideoListRequest struct {
+	AuthorID string `query:"author_id"`
+	PageNum  int    `query:"page_num"`
+	PageSize int    `query:"page_size"`
+}
+
+type VideoListResponse struct {
+	Videos []*VideoResponse `json:"videos"`
 }

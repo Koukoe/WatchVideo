@@ -77,3 +77,27 @@ func PublishVideo(ctx context.Context, c *app.RequestContext) {
 
 	response.Success(c, resp)
 }
+
+func VideoList(ctx context.Context, c *app.RequestContext) {
+	var req api.VideoListRequest
+	if err := c.BindAndValidate(&req); err != nil {
+		response.Error(c, http.StatusBadRequest, response.CodeBadRequest, "invalid request")
+		return
+	}
+
+	items, total, err := service.ListVideosByAuthor(&req)
+	if err != nil {
+		if errors.Is(err, service.ErrInvalidParams) {
+			response.Error(c, http.StatusBadRequest, response.CodeBadRequest, "invalid params")
+			return
+		}
+		response.Error(c, http.StatusInternalServerError, response.CodeInternal, "internal server error")
+		return
+	}
+
+	resp := &response.PageData{
+		Items: items,
+		Total: total,
+	}
+	response.Success(c, resp)
+}
