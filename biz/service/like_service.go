@@ -18,6 +18,11 @@ func LikeAction(currentUserID string, req *api.LikeActionRequest) error {
 		return ErrInvalidParams
 	}
 
+	// 增加 visit_count
+	if err := db.IncVideoVisitCount(videoID); err != nil {
+		return err
+	}
+
 	exist, err := db.GetLikeByUserAndVideo(currentUserID, videoID)
 	if err != nil {
 		return err

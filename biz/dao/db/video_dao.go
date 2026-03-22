@@ -2,6 +2,8 @@ package db
 
 import (
 	"WatchVideo/biz/model/store"
+
+	"gorm.io/gorm"
 )
 
 func CreateVideo(v *store.Video) error {
@@ -84,4 +86,10 @@ func CountSearchVideos(keywords, username, fromDate, toDate string) (int64, erro
 		return 0, err
 	}
 	return count, nil
+}
+
+func IncVideoVisitCount(videoID string) error {
+	return DB.Model(&store.Video{}).
+		Where("id = ?", videoID).
+		UpdateColumn("visit_count", gorm.Expr("visit_count + ?", 1)).Error
 }
