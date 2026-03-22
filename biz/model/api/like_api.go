@@ -18,3 +18,5 @@ type LikeListRequest struct {
 type LikeListResponse struct {
 	Videos []*VideoResponse `json:"videos"`
 }
+
+// 我去怎么是根据点击量获取排行榜，我还以为是点赞量

@@ -4,6 +4,7 @@ package main
 
 import (
 	"WatchVideo/biz/dao/db"
+	"WatchVideo/pkg/cache"
 
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
@@ -14,6 +15,11 @@ func main() {
 	if err := db.Init(); err != nil {
 		panic(err)
 	}
+
+	if err := cache.Init(); err != nil {
+		panic(err)
+	}
+	defer cache.Close()
 
 	register(h)
 	h.Spin()
