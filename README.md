@@ -40,10 +40,12 @@
 │   ├── dao
 │   │   ├── db
 │   │   │   ├── db_init.go
+│   │   │   ├── like_dao.go
 │   │   │   ├── user_dao.go
 │   │   │   └── video_dao.go
 │   │   └── redis
 │   ├── handler
+│   │   ├── like_handler.go
 │   │   ├── ping.go
 │   │   ├── user_handler.go
 │   │   └── video_handler.go
@@ -51,15 +53,18 @@
 │   │   └── auth.go
 │   ├── model
 │   │   ├── api
+│   │   │   ├── like_api.go
 │   │   │   ├── user_api.go
 │   │   │   └── video_api.go
 │   │   ├── domain
 │   │   └── store
+│   │       ├── like_model.go
 │   │       ├── user_model.go
 │   │       └── video_model.go
 │   ├── router
 │   │   └── register.go
 │   └── service
+│       ├── like_service.go
 │       ├── user_service.go
 │       └── video_service.go
 ├── build.sh
@@ -69,6 +74,8 @@
 ├── go.sum
 ├── main.go
 ├── pkg
+│   ├── cache
+│   │   └── redis.go
 │   ├── response
 │   │   └── response.go
 │   └── utils
