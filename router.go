@@ -28,5 +28,11 @@ func customizedRegister(r *server.Hertz) {
 		video.POST("/search", handler.SearchVideos)
 	}
 
+	like := r.Group("/like")
+	{
+		like.POST("/action", middleware.DualTokenAuth(), handler.LikeAction)
+		like.GET("/list", handler.LikeList)
+	}
+
 	// your code ...
 }
