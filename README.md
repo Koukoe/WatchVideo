@@ -1,6 +1,8 @@
 # WatchVideo
 
-基于 Hertz 框架的视频网站后端服务（GORM + SQLite）
+基于 Hertz 框架的视频网站API
+
+使用了 GORM, SQLite, jwt, Valkey
 
 ## 接口
 
