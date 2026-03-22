@@ -71,7 +71,7 @@ func CountSearchVideos(keywords, username, fromDate, toDate string) (int64, erro
 
 	if username != "" {
 		likePattern := "%" + username + "%"
-		query = query.Where("author_id IN (SELECT id FROM users WHERE username = ?)", likePattern)
+		query = query.Where("author_id IN (SELECT id FROM users WHERE username LIKE ?)", likePattern)
 	}
 
 	if fromDate != "" {
@@ -92,4 +92,24 @@ func IncVideoVisitCount(videoID string) error {
 	return DB.Model(&store.Video{}).
 		Where("id = ?", videoID).
 		UpdateColumn("visit_count", gorm.Expr("visit_count + ?", 1)).Error
+}
+
+func ListPopularVideos(offset, limit int) ([]*store.Video, error) {
+	var videos []*store.Video
+	if err := DB.Model(&store.Video{}).
+		Order("visit_count DESC, created_at DESC").
+		Offset(offset).
+		Limit(limit).
+		Find(&videos).Error; err != nil {
+		return nil, err
+	}
+	return videos, nil
+}
+
+func CountPopularVideos() (int64, error) {
+	var count int64
+	if err := DB.Model(&store.Video{}).Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return count, nil
 }

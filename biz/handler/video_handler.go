@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -124,4 +125,38 @@ func SearchVideos(ctx context.Context, c *app.RequestContext) {
 		Total: total,
 	}
 	response.Success(c, resp)
+}
+
+func PopularVideos(ctx context.Context, c *app.RequestContext) {
+	pageNum := 1
+	pageSize := 10
+
+	if s := strings.TrimSpace(string(c.Query("page_num"))); s != "" {
+		v, err := strconv.Atoi(s)
+		if err != nil {
+			response.Error(c, http.StatusBadRequest, response.CodeBadRequest, "invalid page_num")
+			return
+		}
+		pageNum = v
+	}
+
+	if s := strings.TrimSpace(string(c.Query("page_size"))); s != "" {
+		v, err := strconv.Atoi(s)
+		if err != nil {
+			response.Error(c, http.StatusBadRequest, response.CodeBadRequest, "invalid page_size")
+			return
+		}
+		pageSize = v
+	}
+
+	items, total, err := service.PopularVideos(pageNum, pageSize)
+	if err != nil {
+		response.Error(c, http.StatusInternalServerError, response.CodeInternal, "internal server error")
+		return
+	}
+
+	response.Success(c, &response.PageData{
+		Items: items,
+		Total: total,
+	})
 }
