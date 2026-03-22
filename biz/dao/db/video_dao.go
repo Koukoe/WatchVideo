@@ -42,7 +42,7 @@ func SearchVideos(keywords, username, fromDate, toDate string, offset, limit int
 
 	if username != "" {
 		likePattern := "%" + username + "%"
-		query = query.Where("author_id IN (SELECT id FROM users WHERE username = ?)", likePattern)
+		query = query.Where("author_id IN (SELECT id FROM users WHERE username LIKE ?)", likePattern)
 	}
 
 	if fromDate != "" {
